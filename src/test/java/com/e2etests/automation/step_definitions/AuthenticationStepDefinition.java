@@ -35,7 +35,7 @@ public class AuthenticationStepDefinition {
 	}
 
 	@When("je clique sur le bouton submit")
-	public void jeCliqueSurKeBoutonSubmit() {
+	public void jeCliqueSurleBoutonSubmit() {
 		authenticationPage.clickOnSubmitButton();
 	}
 
