@@ -2,7 +2,7 @@ pipeline {
      agent any
      environment {
          ALLURE_RESULTS = 'target/allure-results'
-results
+
      }
 
      stages {
