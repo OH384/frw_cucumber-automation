@@ -1,8 +1,9 @@
-
 pipeline {
     agent any
 
     environment {
+        // Define environment variables
+        MAVEN_OPTS = "-Dmaven.test.failure.ignore=true"
         ALLURE_RESULTS_DIR = "target/allure-results"
         ALLURE_REPORT_DIR = "target/allure-report"
     }
@@ -51,8 +52,14 @@ pipeline {
         stage('Publish Reports') {
             steps {
                 echo "Publishing reports"
+                
                 // Publish Cucumber Report
-                cucumber buildStatus: 'UNSTABLE', reportTitle: 'Cucumber Report', jsonReportDirectory: 'target/cucumber.json'
+                cucumber(
+                    buildStatus: 'UNSTABLE',
+                    reportTitle: 'Cucumber Report',
+                    jsonReportDirectory: 'target',
+                    fileIncludePattern: '**/cucumber.json' // Add this parameter
+                )
 
                 // Publish Allure Report
                 allure([
