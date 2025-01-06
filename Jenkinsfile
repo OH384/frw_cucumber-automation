@@ -1,12 +1,5 @@
 pipeline {
      agent any
-
-     tools {
-         maven 'Maven 3.9.9' // Ensure Maven is installed and configured in
-Jenkins
-         jdk 'JDK 17'     
-     }
-
      environment {
          ALLURE_RESULTS = 'target/allure-results'
 results
