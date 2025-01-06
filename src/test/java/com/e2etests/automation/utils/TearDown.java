@@ -5,7 +5,8 @@ import org.openqa.selenium.TakesScreenshot;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
-
+import io.qameta.allure.Allure;
+import java.io.ByteArrayInputStream;
 public class TearDown {
 	/**
 	 * This method is used to close browser. This method is called after the
@@ -17,11 +18,12 @@ public class TearDown {
 	public void quitDriver(Scenario scenario) {
 		if (scenario.isFailed()) {
 			final byte[] screenshot = ((TakesScreenshot) Setup.getDriver()).getScreenshotAs(OutputType.BYTES);
-			scenario.attach(screenshot, "image/png", "screenshot");
+			//scenario.attach(screenshot, "image/png", "screenshot");
+			Allure.addAttachment("Fieled Step", new ByteArrayInputStream(screenshot) );
 
 		}
 		Setup.getDriver().quit();
-
+		Setup.LOGGER.info("Scenario : "+scenario.getName()+"finished.status"+scenario.getStatus());
 	}
-
+	
 }

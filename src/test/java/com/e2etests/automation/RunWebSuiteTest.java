@@ -17,8 +17,9 @@ import io.cucumber.junit.CucumberOptions;
 */
 @CucumberOptions(
 	features = {"src/spec/features"},
-	plugin = {"pretty","html:target/cucumber-report.html"},
-	tags = ("@module_register"),
+	plugin = {"pretty","html:target/cucumber-report.html","json:target/cucumber-report.json"},
+	//plugin = {"pretty","io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
+	tags = ("@LOG"),
 	//glue = {"com.e2etests.automation.step_definitions"},
 	monochrome = true,
 	snippets = CAMELCASE

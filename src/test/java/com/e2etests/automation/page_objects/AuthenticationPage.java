@@ -1,9 +1,12 @@
 package com.e2etests.automation.page_objects;
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.e2etests.automation.utils.ConfigFileReader;
 import com.e2etests.automation.utils.Setup;
@@ -23,18 +26,19 @@ public class AuthenticationPage {
 
 	@FindBy(how = How.TAG_NAME, using = "h3")
 	public static WebElement welcomeMessage;
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationPage.class);
 
 	public AuthenticationPage() {
 		PageFactory.initElements(Setup.getDriver(), this);
-		this.configFileReader = new ConfigFileReader ();
+		this.configFileReader = new ConfigFileReader();
 	}
-	
+
 	/* Create Method */
-	public void gotoURL () {
+	public void gotoURL() {
+		LOGGER.info("olfa");
 		Setup.getDriver().get(configFileReader.getProperties("home.url"));
 	}
-	
-	
+
 	public void fillUserName(String name) {
 		userName.sendKeys("name");
 	}
@@ -46,7 +50,6 @@ public class AuthenticationPage {
 	public void clickOnSubmitButton() {
 		btnsubmit.click();
 
-		
 	}
 
 }

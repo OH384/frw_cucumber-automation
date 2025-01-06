@@ -1,3 +1,4 @@
+@TNR
 Feature: je verifie la page d authentification
   En tant que utilisateur je souhaite me connecter au site Mercury
 

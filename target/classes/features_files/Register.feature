@@ -1,3 +1,4 @@
+@TNR
 Feature: je verifie la validation du formulaire inscription
   En tant que utilisateur je veux remplir un formulaire  inscription afin de créer un compte
 
