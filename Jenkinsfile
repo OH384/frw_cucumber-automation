@@ -1,87 +1,60 @@
 pipeline {
-    agent any
+     agent any
 
-    environment {
-        // Define environment variables
-        MAVEN_OPTS = "-Dmaven.test.failure.ignore=true"
-        ALLURE_RESULTS_DIR = "target/allure-results"
-        ALLURE_REPORT_DIR = "target/allure-report"
-    }
+     tools {
+         maven 'Maven 3.9.9' // Ensure Maven is installed and configured in
+Jenkins
+         jdk 'JDK 17'     
+     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                echo "Checking out code from Git repository"
-                checkout scm
-            }
-        }
+     environment {
+         ALLURE_RESULTS = 'target/allure-results'
+results
+     }
 
-        stage('Setup Environment') {
-            steps {
-                echo "Setting up the environment"
-                script {
-                    // Clean workspace to avoid conflicts
-                    cleanWs()
-                }
-            }
-        }
+     stages {
+         stage('Checkout') {
+             steps {
+                 checkout scm
+             }
+         }
 
-        stage('Install Dependencies') {
-            steps {
-                echo "Installing Maven dependencies"
-                sh 'mvn clean install -DskipTests'
-            }
-        }
+         stage('Install Dependencies') {
+             steps {
+                 sh 'mvn clean install -DskipTests' 
+             }
+         }
 
-        stage('Run Tests') {
-            steps {
-                echo "Running tests and generating Cucumber JSON report"
-                sh 'mvn test -Dcucumber.plugin="json:target/cucumber.json,html:target/cucumber-html-report"'
-            }
-        }
+         stage('Run Tests & Generate Allure Report') {
+             steps {
+                 sh '''
+                     mvn test -Dsurefire.useFile=false
+-Dallure.results.directory=${ALLURE_RESULTS}
+                     echo "Contents of allure-results:"
+                     ls -la ${ALLURE_RESULTS}
+                 '''
+             }
+         }
 
-        stage('Generate Allure Report') {
-            steps {
-                echo "Generating Allure results"
-                sh """
-                   allure generate ${ALLURE_RESULTS_DIR} -o ${ALLURE_REPORT_DIR} --clean
-                """
-            }
-        }
+         stage('Archive Artifacts') {
+             steps {
+                 archiveArtifacts artifacts: '${ALLURE_RESULTS}/**',
+allowEmptyArchive: true
+             }
+         }
+     }
 
-        stage('Publish Reports') {
-            steps {
-                echo "Publishing reports"
-                
-                // Publish Cucumber Report
-                cucumber(
-                    buildStatus: 'UNSTABLE',
-                    reportTitle: 'Cucumber Report',
-                    jsonReportDirectory: 'target',
-                    fileIncludePattern: '**/cucumber.json' // Add this parameter
-                )
-
-                // Publish Allure Report
-                allure([
-                    includeProperties: false,
-                    jdk: '',
-                    reportBuildPolicy: 'ALWAYS',
-                    results: [[path: "${ALLURE_RESULTS_DIR}"]]
-                ])
-            }
-        }
-    }
-
-    post {
-        always {
-            echo "Pipeline completed. Cleaning up workspace."
-            cleanWs()
-        }
-        success {
-            echo "Build and tests succeeded."
-        }
-        failure {
-            echo "Build or tests failed."
-        }
-    }
+     post {
+         always {
+             script {
+                 allure([
+                     includeProperties: false,
+                     jdk: '',
+                     properties: [],
+                     reportBuildPolicy: 'ALWAYS',
+                     results: [[path: "${ALLURE_RESULTS}"]]
+                 ])
+             }
+         }
+     }
 }
