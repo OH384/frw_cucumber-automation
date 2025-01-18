@@ -22,10 +22,10 @@ public class AuthenticationOrangehrmPage {
 	final static String USER_NAME = "username";
 	final static String PASS_WORD = "password";
 	final static String LOGIN_BUTTON = "//button[@type='submit']";
-	final static String ACCOUNTMENU_BUTTON = "//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[3]/ul/li/span";
-	final static String LOG_OUT = "//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[3]/ul/li/ul/li[4]/a";
-	final static String LOGIN_NOTE = "//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/h5";
-	final static String DASHBOARD_NOTE = "//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[1]/span/h6";
+	final static String ACCOUNT_MENU = "//i[@class='oxd-icon bi-caret-down-fill oxd-userdropdown-icon']";
+	final static String LOG_OUT = "//a[contains(text(),'Logout')]";
+	final static String LOGIN_NOTE = "//h5[@class='oxd-text oxd-text--h5 orangehrm-login-title']";
+	final static String DASHBOARD_NOTE = "//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']";
 	
 	@FindBy(how = How.NAME, using = USER_NAME )
 	public static WebElement userName;
@@ -38,7 +38,7 @@ public class AuthenticationOrangehrmPage {
 	@FindBy(how = How.XPATH, using = DASHBOARD_NOTE)
 	public static WebElement dashboardNote;
 	
-	@FindBy(how = How.XPATH, using = ACCOUNTMENU_BUTTON)
+	@FindBy(how = How.XPATH, using = ACCOUNT_MENU)
 	public static WebElement accountMenuButton;
 
 	@FindBy(how = How.XPATH, using = LOG_OUT)

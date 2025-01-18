@@ -33,7 +33,7 @@ public class AuthenticationOrangehrmStepDefinition extends BasePage {
 		this.validations = new Validations();
 		this.configfilereader = new ConfigFileReader();
 		this.seleniumutils = new SeleniumUtils();
-		this.wait = new Wait (driver);
+		this.wait = new Wait(driver);
 		this.selectFromListUtils = new SelectFromListUtils();
 	}
 
@@ -65,17 +65,19 @@ public class AuthenticationOrangehrmStepDefinition extends BasePage {
 //				authenticationOrangehrmPage.accountMenuButton);
 //		driver.quit();
 //	}
-	
+
 	@Then("je me redirige vers le tableau de bord d OrangeHRM")
 	public void jeMeRedirigeVersLeTableauDeBordDOrangeHRM() {
-		wait.forElementToBeDisplayed(Duration.ofSeconds(30), authenticationOrangehrmPage.dashboardNote, "dashboardNote");
-		Assert.assertEquals("Dashboard",authenticationOrangehrmPage.dashboardNote.getText());
+		wait.forElementToBeDisplayed(Duration.ofSeconds(30), authenticationOrangehrmPage.dashboardNote,
+				"dashboardNote");
+		Assert.assertEquals("Dashboard", authenticationOrangehrmPage.dashboardNote.getText());
 		driver.quit();
 	}
 
 	@When("je clique sur l icone de proprieteaire du compte")
 	public void jeCliqueSurLIconeDeProprietaireDuCompte() {
-		wait.forElementToBeDisplayed(Duration.ofSeconds(30), authenticationOrangehrmPage.accountMenuButton, "accountMenuButton");
+		wait.forElementToBeDisplayed(Duration.ofSeconds(30), authenticationOrangehrmPage.accountMenuButton,
+				"accountMenuButton");
 		seleniumutils.click(authenticationOrangehrmPage.accountMenuButton);
 //		selectFromListUtils.selectDropDownListByVisibleText(authenticationOrangehrmPage.logOut,"Logout");
 	}
@@ -89,7 +91,7 @@ public class AuthenticationOrangehrmStepDefinition extends BasePage {
 	@Then("je me redirige vers la page de connexion")
 	public void jeSuisRedirigeVersLaPageDeConnexion() {
 		wait.forElementToBeDisplayed(Duration.ofSeconds(30), authenticationOrangehrmPage.loginNote, "loginNote");
-		Assert.assertEquals("Login",authenticationOrangehrmPage.loginNote.getText());
+		Assert.assertEquals("Login", authenticationOrangehrmPage.loginNote.getText());
 		driver.quit();
 	}
 
